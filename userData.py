@@ -8,7 +8,6 @@ import numpy as np
 #      - requests
 
 
-
 startData = [0.5] * 10
 userVector = np.array(startData)
 
