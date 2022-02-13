@@ -21,25 +21,67 @@ tmdb_api_key = "61927fa19fa76dd5fbeac609493ca3c1"
 
 imdb_api_key = "k_rxh9t80o"
 
-#imdb data, can get info like:
-# - imdb rank -> "rank"
-# - title -> "title"
-# - release year -> "year"
-# - director and leads -> "crew" (is a single string, need to parse)
-# - imdb rating -> "imDbRating"
 f = open("sampleData.json")
 sampleData = json.load(f)
 top250 = sampleData["items"]
+print(top250[0])
 
 #details sample, can get info like:
 # - genres -> "genres", [index], "name"
 # - overview -> "overview"
 # - runtime -> "runtime"
-response = requests.get("https://api.themoviedb.org/3/movie/tt0111161?api_key=61927fa19fa76dd5fbeac609493ca3c1&language=en-US")
+sampleResponse = requests.get("https://api.themoviedb.org/3/movie/tt0111161?api_key=61927fa19fa76dd5fbeac609493ca3c1&language=en-US")
 
-castResponse = requests.get("https://api.themoviedb.org/3/movie/tt0111161/credits?api_key=61927fa19fa76dd5fbeac609493ca3c1&language=en-US")
 
-#requests are often formatted like json, but only text, need json loads
+#gets the genres of a movie from TMDB
+def getMovieGenre(imdbID):
+    responseBytes = requests.get(f"https://api.themoviedb.org/3/movie/{imdbID}?api_key=61927fa19fa76dd5fbeac609493ca3c1&language=en-US").content
+    genresDicts = json.loads(responseBytes)["genres"]
+    genres = []
+    for item in genresDicts:
+        genres.append(item["name"])
+    return genres
 
-#add change comment
-#change number 2
+def getMovieRuntime(imdbID):
+    responseBytes = requests.get(f"https://api.themoviedb.org/3/movie/{imdbID}?api_key=61927fa19fa76dd5fbeac609493ca3c1&language=en-US").content
+    return json.loads(responseBytes)["runtime"]
+
+#gets the cast of a movie from TMDB
+def getMovieCast(imdbID):
+    castResponseBytes = requests.get(f"https://api.themoviedb.org/3/movie/{imdbID}/credits?api_key=61927fa19fa76dd5fbeac609493ca3c1&language=en-US").content
+    castResponse = json.loads(castResponseBytes)['cast']
+    actorsList = []
+    for item in castResponse:
+        if item["known_for_department"] == "Acting":
+            actorsList.append(item['name'])
+    return actorsList
+
+############################################
+#produces a dictionary of the top 250 movies
+#
+#current items of importance:
+#   id
+#   rank
+#   title
+#   year
+#   director
+#   cast
+#   imDbRating
+############################################
+def getTop250():
+    f = open("sampleData.json")
+    sampleData = json.load(f)
+    top250 = sampleData["items"]
+    
+    for item in top250:
+        id = item['id']
+        actors = getMovieCast(id)
+        item["cast"] = actors
+        item["director"] = item["crew"].split("(")[0]
+
+        item["genre"] = getMovieGenre(id)
+        item["runtime"] = getMovieRuntime(id)
+
+    
+    return top250
+
