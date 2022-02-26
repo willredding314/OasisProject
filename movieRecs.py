@@ -24,7 +24,6 @@ imdb_api_key = "k_rxh9t80o"
 f = open("sampleData.json")
 sampleData = json.load(f)
 top250 = sampleData["items"]
-print(top250[0])
 
 #details sample, can get info like:
 # - genres -> "genres", [index], "name"
@@ -67,6 +66,8 @@ def getMovieCast(imdbID):
 #   director
 #   cast
 #   imDbRating
+#   runtime
+#   genre
 ############################################
 def getTop250():
     f = open("sampleData.json")
@@ -85,3 +86,14 @@ def getTop250():
     
     return top250
 
+topMovies = getTop250()
+genres = []
+for item in topMovies:
+    for genre in item["genre"]:
+        if genre not in genres:
+            genres.append(genre)
+    
+print(genres)
+
+fakeDict = {}
+fakeDict["fakeKey"] = "fakeVal"
