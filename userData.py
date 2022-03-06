@@ -139,3 +139,29 @@ fakeDict["fakeKey"] = "fakeVal"
 # one field on hard filters and one on vector
 # how many values in filters, vs. how many values in current vector
 # make data type for movie/user response
+
+# USER DATA -> DICT: {"Filters": Filters-Dict, "Vectors": List-of Nums}
+
+user = {
+    "Filters" : {
+        "Netflix" : 1, 
+        "Hulu" : 1,
+        "R-accepted" : 1
+    },
+    "Vectors" : startData
+}
+
+#make the list (third item), a sample movie vector, matching the ordering of 
+#the vector items (genres should be 0 or 1, runtime between 0 and 1, cast between 0 and 5)
+movieTup1 = ("Moviename", {}, [])
+movieTup2 = ("Moviename", {}, [])
+
+userVector = []
+# a lot of vectors 
+# add final vector number between 0-5
+# LIST :
+#    VECTORS - one for each movie, really just a list of numbers
+# Create a new list with same length as movie list
+# Run cosine similarity on each, add structure of ( movie-name , cosine similarity )
+tup = ("moviename", 0.016) #second value is cosine similarity
+# Run though that list, get top 5 highest in order
