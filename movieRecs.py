@@ -24,7 +24,6 @@ imdb_api_key = "k_rxh9t80o"
 f = open("sampleData.json")
 sampleData = json.load(f)
 top250 = sampleData["items"]
-print(top250[0])
 
 #details sample, can get info like:
 # - genres -> "genres", [index], "name"
@@ -82,6 +81,16 @@ def getTop250():
         item["genre"] = getMovieGenre(id)
         item["runtime"] = getMovieRuntime(id)
 
-    
     return top250
+
+######### FOR RISHA
+# call getCastTuples() to get a list of (movies, [FULL CAST LIST])
+def getCastTuples():
+    top250 = getTop250()
+    casts = []
+    for item in top250:
+        print("HIT")
+        casts.append((item["title"], item["cast"]))
+
+    return casts
 
