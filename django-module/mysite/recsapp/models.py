@@ -6,7 +6,6 @@ class MovieData(models.Model):
     vector_data = models.JSONField()
     cast_data = models.JSONField()
 
-
 class BinarySelection(models.Model):
     question_text = models.CharField(max_length=200)
     response = models.BooleanField()

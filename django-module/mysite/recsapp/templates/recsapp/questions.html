@@ -1,0 +1,13 @@
+<center>
+    <h1>Movie Recomendations!</h1>
+    <h4>Welcome to Movie Recomendations. Respond to these questions and we can find a movie for you!</h4>
+    <br>
+    <form action="questions" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit">
+    </form>
+    <br>
+    <br>
+    <p>Created by Dominic Imondi, Risha Ranjan, and Will Redding in NEU Oasis.</p>
+</center>

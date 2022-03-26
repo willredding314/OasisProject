@@ -1,8 +1,11 @@
 Django Notes:
     - if you're using the tutorial, replace all "python" CLI coms with "python3"
     - whenever a change is made to the model, run "python3 manage.py makemigrations recsapp"
-    - running the server will 404 - add recsapp to the end to view index
+    - running the server will 404 - add recsapp/questions to the end to view index
         - add admin to the end to view admin page, use super user login
+        - add /blank to go to questions page
+        - add /blank/results to go to results page
 Super user:
     - user: superuser
     - pw: oasisproj
+

@@ -80,8 +80,10 @@ def getTop250():
 
         item["genre"] = getMovieGenre(id)
         item["runtime"] = getMovieRuntime(id)
+        item["castscore"] = 0
 
     return top250
+
 
 ######### FOR RISHA
 # call getCastTuples() to get a list of (movies, [FULL CAST LIST])
@@ -94,3 +96,14 @@ def getCastTuples():
 
     return casts
 
+def dumpTop250():
+    tops = getTop250()
+    jsonTops = json.dumps(tops)
+    print(jsonTops)
+    f = open("newData.json", "w")
+    f.write(jsonTops)
+    f.flush()
+    print("Post Write")
+
+print("Pre dumps")
+dumpTop250()
